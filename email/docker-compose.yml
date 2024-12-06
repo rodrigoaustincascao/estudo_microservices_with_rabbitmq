@@ -1,0 +1,33 @@
+version: "3"
+volumes:
+  ms-email_data:
+
+networks:
+  ms-network:
+    driver: bridge
+
+services:
+  ms-email-postgres:
+    image: postgres:13.0-alpine
+    environment:
+      - POSTGRES_DB=ms-email
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ms-email_data:/var/lib/postgresql/data
+    ports:
+      - 5412:5432
+    networks:
+      - ms-network
+
+  ######## MAILHOG (CAIXA DE EMAIL FAKE) ########
+  ms-mailhog:
+    image: mailhog/mailhog:v1.0.1
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - ms-network
+
+
+

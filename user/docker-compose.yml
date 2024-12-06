@@ -1,0 +1,23 @@
+version: "3"
+volumes:
+  ms-user_data:
+
+networks:
+  ms-network:
+    driver: bridge
+
+services:
+  ms-user-postgres:
+    image: postgres:13.0-alpine
+    environment:
+      - POSTGRES_DB=ms-user
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ms-user_data:/var/lib/postgresql/data
+    ports:
+      - 5411:5432
+    networks:
+      - ms-network
+
+
